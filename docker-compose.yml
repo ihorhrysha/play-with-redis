@@ -1,0 +1,28 @@
+version: "2"
+
+services:
+  mongodb:
+    image: "bitnami/mongodb:latest"
+    ports:
+      - "27017:27017"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MONGODB_USERNAME=node-adv-app
+      - MONGODB_PASSWORD=password123
+      - MONGODB_DATABASE=node-adv-app-db
+    volumes:
+      - db:/bitnami
+  redis:
+    image: "bitnami/redis:latest"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/bitnami/redis"
+volumes:
+  db:
+  redis_data:
